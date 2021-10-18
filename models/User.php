@@ -56,8 +56,8 @@ class User {
       try { 
         $result = null;
         $db = Connection::connect();
-         $db->query("UPDATE `user` SET `image` ='". $image ."' WHERE `id` =" .$id );
-         $query = $db->query("SELECT * FROM `user` WHERE `id` = ".$id);
+         $query = $db->query("CALL SP_UpdateImageProfile(".$id.",'".$image."')" );
+         
         if($query){
           Connection::disconnect($db);
             $user = $query->fetch_assoc();

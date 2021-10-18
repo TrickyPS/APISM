@@ -39,6 +39,34 @@ if (isset($_SERVER['REQUEST_METHOD']))
         }
         break;
 
+        case 'GET':
+          try {
+            $id_review = null;
+            $id = null;
+            $resp = null;
+              if(isset($_GET['id_review']) && isset($_GET['id']) ){
+                  $id = $_GET['id'];
+                  $id_review = $_GET['id_review'];
+                  $resp = Review::GetReviewById($id_review,$id);
+              }else{
+                $resp = Review::GetAllPreviews();
+              }
+              
+              if( $resp  != false ){
+                http_response_code(200);
+                echo json_encode($resp, JSON_PRETTY_PRINT);
+              }else{
+                echo $resp;
+                http_response_code(500);
+                echo json_encode(array("message"=>"Internal Error"));
+              }
+           
+          } catch (\Throwable $th) {
+            http_response_code(500);
+            echo json_encode(array("message"=>"Internal Error"));
+          }
+          break;
+
       default :
       http_response_code(404);
       echo json_encode(array("message"=>"Resource Not Found "));
