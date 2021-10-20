@@ -30,19 +30,15 @@ class Review {
       try {
        $db = Connection::connect();
        $query = $db->query("CALL SP_GetAllPreview()");
-       
        if($query){
          Connection::disconnect($db);
           $reviews= null;
-          while($row = $query->fetch_assoc()) {
-
-            $reviews[]=$row;
+          while($row = mysqli_fetch_assoc($query)) {
+           $reviews[]=$row;
     
           }
           
-           
-        
-           return $reviews; 
+           return $reviews;
          }
          else{
            echo $db->error;

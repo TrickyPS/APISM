@@ -46,7 +46,7 @@ if (isset($_SERVER['REQUEST_METHOD']))
               $id_review = $_GET['id'];
             
             if($id_review ){
-              $resp = ImagesReview::GetAllComments($id_review);
+              $resp = Comentarios::GetAllComments($id_review);
               if( $resp  != false ){
                 http_response_code(200);
                 echo json_encode($resp);
