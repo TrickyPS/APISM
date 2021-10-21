@@ -28,7 +28,7 @@ class ImagesReview {
     public static function GetImagesByIdReview($id_review){
       try {
        $db = Connection::connect();
-       $query = $db->query("SELECT * FROM images WHERE id_review = ".$id_review.";");
+       $query = $db->query("SELECT * FROM images WHERE id_review = ".$id_review." ORDER BY id DESC;");
        if($query){
          Connection::disconnect($db);
          $images = null;

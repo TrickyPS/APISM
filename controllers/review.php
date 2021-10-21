@@ -42,12 +42,16 @@ if (isset($_SERVER['REQUEST_METHOD']))
         case 'GET':
           try {
             $id_review = null;
+            $id_user=null;
             $id = null;
             $resp = null;
               if(isset($_GET['id_review']) && isset($_GET['id']) ){
                   $id = $_GET['id'];
                   $id_review = $_GET['id_review'];
                   $resp = Review::GetReviewById($id_review,$id);
+              }else if(isset($_GET["id_user"])){
+                $id_user = $_GET["id_user"];
+                $resp = Review::GetAllPreviewCreatedByUser($id_user);
               }else{
                 $resp = Review::GetAllPreviews();
               }

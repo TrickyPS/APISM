@@ -53,7 +53,6 @@ FOREIGN KEY (`id_review`) REFERENCES `review`(`id`),
 PRIMARy KEY (`id_user`,`id_review`)
 );
 CREATE TABLE IF NOT EXISTS `favoritos`(
-`id` INT UNSIGNED AUTO_INCREMENT,
 `check` BOOL DEFAULT FALSE,
 `id_user` INT UNSIGNED NOT NULL,
 `id_review` INT UNSIGNED NOT NULL,
@@ -61,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `favoritos`(
 `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 FOREIGN KEY (`id_user`) REFERENCES `user`(`id`),
 FOREIGN KEY (`id_review`) REFERENCES `review`(`id`),
-PRIMARy KEY (`id`)
+PRIMARy KEY (`id_user`,`id_review`)
 );
 
 DELIMITER //
@@ -138,7 +137,7 @@ DELIMITER //
 	CREATE PROCEDURE `SP_GetAllPreview`(
 	 )
 	BEGIN
-	SELECT Distinct `review`.titulo,`review`.subtitulo,`review`.contenido,  `review`.id ,(select image from images where id_review = `review`.id Limit 1)as 'image'
+	SELECT Distinct `review`.titulo,`review`.subtitulo,`review`.contenido,`review`.created_at,  `review`.id,(select image from images where id_review = `review`.id ORDER BY id DESC Limit 1)as 'image'
     from `review` INNER JOIN `images` 
     ON `review`.id = `images`.id_review ORDER BY `review`.created_at DESC ;
 	END //
@@ -151,7 +150,8 @@ IN _id INt unsigned
 BEGIN
 SELECT `review`.created_at ,`review`.titulo,`review`.subtitulo,`review`.contenido, `user`.nombre,`user`.email,`user`.apellido , `user`.image,
 (SELECT COUNT(`voto`) FROM `votosreview` WHERE `id_review` = `review`.id AND `voto` IS true) as 'votos',
-(SELECT `voto` FROM `votosreview` WHERE `id_user` = _id AND `id_review`=_id_review ) as 'isVoted'
+(SELECT `voto` FROM `votosreview` WHERE `id_user` = _id AND `id_review`=_id_review ) as 'isVoted',
+(SELECT `check` FROM `favoritos` WHERE `id_user` = _id AND `id_review`=_id_review ) as 'check'
 from `review` INNER JOIN `user` 
 ON `review`.id_user = `user`.id 
 WHERE `review`.id = _id_review ;
@@ -166,3 +166,26 @@ SELECT A.`comment`,A.`created_at`,B.`nombre`,B.`apellido`,B.`email`,B.`image`
 FROM `comentarios` A INNER JOIN `user` B 
 ON A.id_user = B.id WHERE A.id_review = _id_review ORDER BY A.`created_at`;
 END //
+
+DELIMITER //
+	CREATE PROCEDURE `SP_GetAllPreviewByUser`(
+    IN _id_user INT unsigned
+	 )
+	BEGIN
+	SELECT Distinct `review`.titulo,`review`.subtitulo,`review`.contenido,`favoritos`.created_at,  `review`.id,(select image from images where id_review = `review`.id ORDER BY id DESC Limit 1)as 'image'
+    from `review` INNER JOIN `images` 
+    ON `review`.id = `images`.id_review
+    INNER JOIN `favoritos` ON `favoritos`.id_review = `review`.id  
+    WHERE `favoritos`.id_user = _id_user ORDER BY `favoritos`.created_at DESC ;
+	END //
+
+    DELIMITER //
+	CREATE PROCEDURE `SP_GetAllPreviewCreatedByUser`(
+    IN _id_user INT unsigned
+	 )
+	BEGIN
+	SELECT Distinct `review`.titulo,`review`.subtitulo,`review`.contenido,`review`.created_at,  `review`.id,(select image from images where id_review = `review`.id ORDER BY id DESC Limit 1)as 'image'
+    from `review` INNER JOIN `images` 
+    ON `review`.id = `images`.id_review
+    WHERE `review`.id_user = _id_user ORDER BY `review`.created_at DESC ;
+	END //

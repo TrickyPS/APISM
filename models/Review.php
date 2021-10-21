@@ -74,6 +74,34 @@ class Review {
     Connection::disconnect($db);
  }
 
+ public static function GetAllPreviewCreatedByUser($id_user){
+  try {
+   $db = Connection::connect();
+   $query = $db->query("CALL SP_GetAllPreviewCreatedByUser(".$id_user.")");
+   
+   if($query){
+      Connection::disconnect($db);
+       $reviews= null;
+       while($row = mysqli_fetch_assoc($query)) {
+        $reviews[]=$row;
+ 
+       }
+       
+        return $reviews;
+      }
+     else{
+       echo $db->error;
+       Connection::disconnect($db);
+       return false;
+     }
+   return true;
+  } catch (\Throwable $th) {
+      return false;
+  }
+  Connection::disconnect($db);
+}
+
+
 }
 
 ?>
