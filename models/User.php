@@ -21,7 +21,7 @@ class User {
             return false;
           }
         return true;
-       } catch (\Throwable $th) {
+       } catch (Exception $th) {
            return false;
        }
        Connection::disconnect($db);
@@ -46,7 +46,7 @@ class User {
                 return false;
               }
             return true;
-           } catch (\Throwable $th) {
+           } catch (Exception $th) {
                return false;
            }
            Connection::disconnect($db);
@@ -70,12 +70,35 @@ class User {
             return false;
           }
         return true;
-       } catch (\Throwable $th) {
+       } catch (Exception $th) {
            return false;
        }
        Connection::disconnect($db);
     }
+    public static function Contra($id,$contraseña,$contraseña2){
+      try {
+       $result = null;
+       $db = Connection::connect();
+       $query = $db->query("CALL SP_Cambiar(".$id.",'".$contraseña."','".$contraseña2."')");
+       
+       if($query){
+         Connection::disconnect($db);
+           $user = $query->fetch_assoc();
+           return $user; 
+         }
+         else{
+           echo $db->error;
+           Connection::disconnect($db);
+           return false;
+         }
+       return true;
+      } catch (Exception $th) {
+          return false;
+      }
+      Connection::disconnect($db);
+   }
 
+    
 }
 
 ?>

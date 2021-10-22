@@ -143,6 +143,7 @@ DELIMITER //
 	END //
     
 DELIMITER //
+
 CREATE PROCEDURE `SP_GetReviewById`(
 IN _id_review INT unsigned,
 IN _id INt unsigned
@@ -189,12 +190,11 @@ DELIMITER //
     ON `review`.id = `images`.id_review
     WHERE `review`.id_user = _id_user ORDER BY `review`.created_at DESC ;
 	END //
-
-	CREATE PROCEDURE SP_Buscar()
+    DELIMITER //
+	CREATE PROCEDURE `SP_Buscar`()
 BEGIN
-    SELECT Distinct review.titulo,review.id ,(select image from images where id_review = review.id Limit 1) as 'image',
-    review.created_at ,user.nombre,user.apellido,user.email from review INNER JOIN images 
-    ON review.id = images.id_review INNER JOIN user ON review.id_user = user.id
+    SELECT Distinct review.titulo,review.id ,(select image from images where id_review = review.id Lim ) as 'image',
+    review.created_at ,`user`.nombre,`user`.apellido,`user`.email from review INNER JOIN images 
+    ON review.id = images.id_review INNER JOIN `user` ON review.id_user = `user`.id
     ORDER BY review.created_at DESC;
     END //
-    DELIMITER //

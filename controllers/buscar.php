@@ -12,7 +12,7 @@ if (isset($_SERVER['REQUEST_METHOD']))
 
       case 'GET':
         try {
-            $resp = Review::Save($titulo,$subtitulo,$contenido,$id_user);
+            $resp = Review::GetSearch();
             if( $resp  != false ){
               http_response_code(200);
               echo json_encode($resp);
@@ -22,7 +22,7 @@ if (isset($_SERVER['REQUEST_METHOD']))
               echo json_encode(array("message"=>"Internal Error"));
             }
 
-        } catch (\Throwable $th) {
+        } catch (Exception $th) {
           http_response_code(500);
           echo json_encode(array("message"=>"Internal Error"));
         }

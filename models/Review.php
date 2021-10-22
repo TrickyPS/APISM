@@ -20,7 +20,7 @@ class Review {
             return false;
           }
         return true;
-       } catch (\Throwable $th) {
+       } catch (Exception $th) {
            return false;
        }
        Connection::disconnect($db);
@@ -46,7 +46,7 @@ class Review {
            return false;
          }
        return true;
-      } catch (\Throwable $th) {
+      } catch (Exception $th) {
           return false;
       }
       Connection::disconnect($db);
@@ -68,7 +68,7 @@ class Review {
          return false;
        }
      return true;
-    } catch (\Throwable $th) {
+    } catch (Exception $th) {
         return false;
     }
     Connection::disconnect($db);
@@ -95,7 +95,7 @@ class Review {
        return false;
      }
    return true;
-  } catch (\Throwable $th) {
+  } catch (Exception $th) {
       return false;
   }
   Connection::disconnect($db);
@@ -121,7 +121,7 @@ public static function GetSearch(){
        return false;
      }
    return true;
-  } catch (\Throwable $th) {
+  } catch (Exception $th) {
       return false;
   }
   Connection::disconnect($db);

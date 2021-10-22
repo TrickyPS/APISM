@@ -19,7 +19,7 @@ class ImagesReview {
             return $error;
           }
         return true;
-       } catch (\Throwable $th) {
+       } catch (Exception $th) {
            return false;
        }
        Connection::disconnect($db);
@@ -45,7 +45,7 @@ class ImagesReview {
            return false;
          }
        return true;
-      } catch (\Throwable $th) {
+      } catch (Exception $th) {
           return false;
       }
       Connection::disconnect($db);

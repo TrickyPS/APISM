@@ -18,7 +18,7 @@ class Comentarios {
             return false;
           }
         return true;
-       } catch (\Throwable $th) {
+       } catch (Exception $th) {
            return false;
        }
        Connection::disconnect($db);
@@ -44,7 +44,7 @@ class Comentarios {
            return false;
          }
        return true;
-      } catch (\Throwable $th) {
+      } catch (Exception $th) {
           return false;
       }
       Connection::disconnect($db);

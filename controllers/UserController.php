@@ -33,7 +33,7 @@ if (isset($_SERVER['REQUEST_METHOD']))
             http_response_code(400);
             echo json_encode(array("message"=>"Bad Request"));
           }
-        } catch (\Throwable $th) {
+        } catch (Exception $th) {
           http_response_code(500);
           echo json_encode(array("message"=>"Internal Error"));
         }
@@ -41,15 +41,21 @@ if (isset($_SERVER['REQUEST_METHOD']))
 
       case 'PUT':
         try {
+          $image = null;
+          $id = null;
+
           $json = file_get_contents('php://input');
           $data = json_decode($json);
+          if(isset($data->image))
           $image = $data->image;
-          $id = null;
+      
+      
           if(isset($_GET["id"]))
             $id= $_GET["id"];
-          
-          if($image && $id ){
+
+           if($image && $id ){
             $resp = User::Update($id,$image);
+
             if( $resp  != false ){
               http_response_code(200);
               echo json_encode($resp);
@@ -58,11 +64,13 @@ if (isset($_SERVER['REQUEST_METHOD']))
               http_response_code(500);
               echo json_encode(array("message"=>"Internal Error"));
             }
-          }else{
-            http_response_code(400);
-            echo json_encode(array("message"=>"Bad Request"));
-          }
-        } catch (\Throwable $th) {
+            }else{
+              http_response_code(400);
+              echo json_encode(array("message"=>"Bad Request"));
+            }
+            
+          
+        } catch (Exception $th) {
           http_response_code(500);
           echo json_encode(array("message"=>"Internal Error"));
         }

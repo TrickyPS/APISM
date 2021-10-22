@@ -33,7 +33,7 @@ if (isset($_SERVER['REQUEST_METHOD']))
             http_response_code(400);
             echo json_encode(array("message"=>"Bad Request"));
           }
-        } catch (\Throwable $th) {
+        } catch (Exception $th) {
           http_response_code(500);
           echo json_encode(array("message"=>"Internal Error"));
         }
@@ -65,7 +65,7 @@ if (isset($_SERVER['REQUEST_METHOD']))
                 echo json_encode(array("message"=>"Internal Error"));
               }
            
-          } catch (\Throwable $th) {
+          } catch (Exception $th) {
             http_response_code(500);
             echo json_encode(array("message"=>"Internal Error"));
           }
