@@ -11,6 +11,12 @@ if (isset($_SERVER['REQUEST_METHOD']))
   {
     
       case 'POST':
+        /*
+        ANDROID:
+        MI_MUGRERO_LLAMADA_A_API(USER cuerpo_usuario, @Query 'id') -->POST
+        
+        IF $DATA->INSTRUCCION = "BORRAR";
+        */
         try {
           $json = file_get_contents('php://input');
           $data = json_decode($json);

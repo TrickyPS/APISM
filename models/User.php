@@ -98,7 +98,25 @@ class User {
       Connection::disconnect($db);
    }
 
-    
+    public static function deleteUser($id){
+      try{
+        $result = null;
+        $db = Connection::connect();
+        $query = $db->query("CALL SP_BorrarUsuario(".$id.");");
+
+        if($query){
+          Connection::disconnect();
+          ///$user = $query->fetch_assoc();
+          return true;
+        }else{
+          echo $db->error;
+          Connection::disconnect($db);
+          return false;
+        }
+      }catch (Exception $th) {
+        return false;
+      }
+    } 
 }
 
 ?>

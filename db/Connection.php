@@ -16,17 +16,11 @@ class Connection{
             }
             return $mysqli;
         }
-  
-    
-
 
         public static function disconnect($mysqli) {
             mysqli_close($mysqli);
         }
-    
-    
-    
-    
+
     }
     
 ?>

@@ -112,7 +112,6 @@ public static function GetSearch(){
        $reviews[]=$row;
 
       }
-
        return $reviews;
      }
      else{
@@ -120,13 +119,48 @@ public static function GetSearch(){
        Connection::disconnect($db);
        return false;
      }
-   return true;
   } catch (Exception $th) {
       return false;
   }
   Connection::disconnect($db);
 }
 
+public static function BorrarReview($idReview){
+  try{
+    $db = Connection::connect();
+    $query = $db->query("CALL SP_BorrarReview(".$idReview.");");
+    if($query){
+      Connection::disconnect($db);
+      return true;
+    }else{
+      echo $db->error;
+      Connection::disconnect($db);
+      return false;
+    } 
+  } catch (exception $th){
+    return false;
+  }
+  Connection::disconnect($db);
+}
+
+public static function ActualizarReview($idReview, $titulo, $subtitulo, $contenido){
+  try{
+    $db = Connection::connect();
+    $query = $->query("CALL SP_ActualizarReview(".$idReview.", '".$titulo."', '".$subtitulo."', ''".$contenido.");");
+
+    if($query){
+      Connection::disconnect($db);
+      $review = $query->fetch_assoc();
+      return $review;
+    }else{
+      echo $db->error;
+      Connection::disconnect($db);
+      return false;
+    }
+  } catch (Exception $th){
+    return false;
+  }
+}
 
 }
 

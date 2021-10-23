@@ -9,7 +9,6 @@ if (isset($_SERVER['REQUEST_METHOD']))
 {
   switch ($_SERVER['REQUEST_METHOD'])
   {
-    
       case 'POST':
         try {
           $json = file_get_contents('php://input');
