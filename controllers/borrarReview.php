@@ -1,6 +1,6 @@
 <?php
 
-include("../models/User.php");
+include("../models/Review.php");
 include("../db/Connection.php");
 header('Content-Type: application/json');
 
@@ -9,11 +9,12 @@ if (isset($_SERVER['REQUEST_METHOD']))
     switch($_SERVER['REQUEST_METHOD']){
         case 'DELETE':
             try{
+                $idReview = null;
                 if(isset($_GET['idReview'])){
                     $idReview = $_GET['idReview'];
                 }
                 if($idReview){
-                    $resp = Review::BorrarReview($idReview)
+                    $resp = Review::BorrarReview($idReview);
                     if($resp){
                         http_response_code(200);
                         echo json_encode(array("estatus"=>true));
@@ -44,10 +45,11 @@ if (isset($_SERVER['REQUEST_METHOD']))
 
                 if($idReview && $titulo && $subtitulo && $contenido){
                     $resp = Review::ActualizarReview($idReview, $titulo, $subtitulo, $contenido);
-                    if($resp){
-                        http_response_code(200);
-                        echo json_encode($resp);
-                    }else{
+                   
+           if( $resp  != false ){
+            http_response_code(200);
+            echo json_encode(array("estatus"=>true));
+          }else{
                         echo $resp;
                         http_response_code(500);
                         echo json_encode(array("message"=>"Internal Error"));
@@ -60,6 +62,7 @@ if (isset($_SERVER['REQUEST_METHOD']))
                 http_response_code(500);
                 echo json_encode(array("message"=>"Internal Error"));
             }
+            break;
         default :
         http_response_code(404);
         echo json_encode(array("message"=>"Resource Not Found "));

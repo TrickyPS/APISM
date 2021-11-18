@@ -1,7 +1,10 @@
-PUT http://192.168.0.16:3000/controllers/contra.php?id=1 HTTP/1.1
+POST http://192.168.0.16:3000/controllers/borrarReview.php  HTTP/1.1
 content-type: application/json
 
 {
-    "contrasena": "123",
-    "nuevacontra": "1234"
+   "idReview" :"5",
+   "titulo":"ssss",
+   "subtitulo":"www",
+   "contenido":"wwww"
+   
 }

@@ -146,7 +146,7 @@ public static function BorrarReview($idReview){
 public static function ActualizarReview($idReview, $titulo, $subtitulo, $contenido){
   try{
     $db = Connection::connect();
-    $query = $->query("CALL SP_ActualizarReview(".$idReview.", '".$titulo."', '".$subtitulo."', ''".$contenido.");");
+    $query = $db->query("CALL SP_ActualizarReview(".$idReview.",'".$titulo."','".$subtitulo."','".$contenido."');");
 
     if($query){
       Connection::disconnect($db);

@@ -1,12 +1,12 @@
 <?php
 
 return array (
-    "dbHost" => "rebooked.mysql.database.azure.com",
+    "dbHost" => "rebookedsm.mysql.database.azure.com",
     "dbName" => "sistemasdb",
-    "dbUser" => "admin_root@rebooked",
-    "dbPass" => "rebooked123#"
+    "dbUser" => "administrador@rebookedsm",
+    "dbPass" => "Password_1"
    //"dbHost" => "localhost",
-   // "dbName" => "sistemasdb",
+   // "dbName" => "rebooked_sm",
    // "dbUser" => "root",
    // "dbPass" => "12345678"
 )
